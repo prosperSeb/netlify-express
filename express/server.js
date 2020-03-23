@@ -13,7 +13,7 @@ const router = express.Router();
 router.get('/', (req, res) => {
   res.writeHead(200, { 'Content-Type': 'text/html' });
   res.write('<h1>Hello</h1>');
-  res.write('body{<h2>this api provide you acces to movies datas</h2><h2>you can add movie of several actor by entering /movies/populate/:id (imdb id of the actor) </h2>}');
+  res.write('<h2>this api provide you acces to movies datas</h2>');
   res.write('<h2>you can add movie of several actor by entering /movies/populate/:id (imdb id of the actor) </h2>');
   res.write('<h2>you can have acces to a movie by entering  /movies/:id (imdb id of the movie) </h2>');
   res.write('<h2>you can have acces to a random movie with a metascore greater than 70 by entering /movies</h2>');

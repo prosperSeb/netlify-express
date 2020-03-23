@@ -22,11 +22,11 @@ router.get('/', (req, res) => {
 });
 
 
-router.get('/movies/:id', async(request, response) => {
-  const res = request.params.id;
-  const result = await mongodb.getmovie_id(res);
-  response.send(result);
-});
+// router.get('/movies/:id', async(request, response) => {
+//   const res = request.params.id;
+//   const result = await mongodb.getmovie_id(res);
+//   response.send(result);
+// });
 
 router.get('/movies/:search?', async(request, response) => {
   const param = request.params;

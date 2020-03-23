@@ -59,6 +59,11 @@ router.get('/movies/:search?', async(request, response) => {
   {
     const movies = await mongodb.getmovie_list(5,metascore);
     response.send(movies);
+  }else if(param.search.includes('tt'))
+  {
+    const res = request.params.search;
+    const result = await mongodb.getmovie_id(res);
+    response.send(result);
   }else{
     response.send("error in the url")
   }

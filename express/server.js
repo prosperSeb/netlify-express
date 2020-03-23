@@ -12,7 +12,12 @@ const mongodb = require('./app');
 const router = express.Router();
 router.get('/', (req, res) => {
   res.writeHead(200, { 'Content-Type': 'text/html' });
-  res.write('<h1>Hello from Express.js!</h1>');
+  res.write('<h1>Hello</h1>');
+  res.write('<h1>this api provide let you have acces to movies data</h1>');
+  res.write('<h1>you can add movie of several actor by entering /movies/populate/:id (imdb id of the actor) </h1>');
+  res.write('<h1>you can have acces to a movie by entering  /movies/:id (imdb id of the movie) </h1>');
+  res.write('<h1>you can have acces to a random movie with a metascore greater than 70 by entering /movies</h1>');
+  res.write('<h1>you can have acces to list of random movies by entering /movies/search&limit=XX&metascore=YY</h1>');
   res.end();
 });
 
@@ -60,8 +65,20 @@ router.get('/movies/:search?', async(request, response) => {
   
 });
 
-router.get('/another', (req, res) => res.json({ route: req.originalUrl }));
-router.post('/', (req, res) => res.json({ postBody: req.body }));
+router.get('/movies/populate/:id', async(request, response) => {
+  const res = request.params.id;
+  const result = await mongodb.insert(res);
+  response.send(result);
+});
+
+router.post('/movies/:id',async(request,response)=>{
+  const res = request.body;
+  const id = request.params.id;
+  const resultat = await mongodb.addreview(id,res);
+  response.send(resultat);
+
+});
+
 
 app.use(cors());
 app.use(helmet());

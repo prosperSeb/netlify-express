@@ -23,6 +23,43 @@ router.get('/movies/:id', async(request, response) => {
   response.send(result);
 });
 
+router.get('/movies/:search?', async(request, response) => {
+  const param = request.params;
+  //response.send(limit==null );
+
+  const limit = request.query.limit;
+  const metascore= request.query.metascore;
+  if(limit>58 || metascore>100)
+  {
+    response.send("limit can't be higher than 58 and metascore can't be higher than 100");
+  }
+
+  if(param.search==null)
+  {
+    const movies = await mongodb.getrandom();
+    response.send(movies);
+  }else if(param.search=="search" && limit==null&& metascore==null)
+  {
+    const movies = await mongodb.getmovie_list(5,0);
+    response.send(movies);
+  }else if(param.search=="search" && limit!=null&& metascore==null)
+  {
+    const movies = await mongodb.getmovie_list(limit,0);
+    response.send(movies);
+  }else if(param.search=="search" && limit!=null&& metascore!=null)
+  {
+    const movies = await mongodb.getmovie_list(limit,metascore);
+    response.send(movies);
+  }else if(param.search=="search" && limit==null&& metascore!=null)
+  {
+    const movies = await mongodb.getmovie_list(5,metascore);
+    response.send(movies);
+  }else{
+    response.send("error in the url")
+  }
+  
+});
+
 router.get('/another', (req, res) => res.json({ route: req.originalUrl }));
 router.post('/', (req, res) => res.json({ postBody: req.body }));
 
